@@ -21,15 +21,14 @@ class ImageProcess:
                 m=self.image[i,j]
                 n=self.image_plt[i,j]
                 self.image_gray[i,j]=int(m[0]*0.11+m[1]*0.59+m[2]*0.3)
-                self.image_gray_plt[i,j]=n[0]*0.3+n[1]*0.59+n[2]*0.11
+                self.image_gray_plt[i,j]=(n[0]*0.3+n[1]*0.59+n[2]*0.11)
                 self.image_thresholding[i,j]=round(self.image_gray[i,j]/255,2)
-                self.image_thresholding_plt[i,j]=round(self.image_gray_plt[i,j],2)
                 if self.image_thresholding[i, j]<=0.5:
                     self.image_thresholding[i,j]=0
                 else:
                     self.image_thresholding[i,j]=1
 
-                if self.image_thresholding_plt[i, j]<=0.5:
+                if self.image_gray_plt[i, j]<=0.5:
                     self.image_thresholding_plt[i,j]=0
                 else:
                     self.image_thresholding_plt[i,j]=1
@@ -42,11 +41,8 @@ class ImageProcess:
         self.image_thresholding_ok=True
         return self.image_thresholding
     def thresholdingPlt(self):
-        if self.image_thresholding_plt[0,0]>1 or self.image_thresholding_plt[0,0]==0:
-            print("Please make gray first")
-        else:
-            self.image_thresholding_ok=True
-            return self.image_thresholding_plt
+        self.image_thresholding_ok=True
+        return self.image_thresholding_plt
     def cv2show(self):
         if (self.image_gray_ok==True and self.image_thresholding_ok==True):
             cv2.imshow("The Origin Picture",self.image)
@@ -83,7 +79,7 @@ class ImageProcess:
 
 
 if __name__=="__main__":
-    imagePath="G:\CV Studies Files\Week One\study\lenna.png"
+    imagePath="D:\BaDou\cv\weekTwo\study files\lenna.png"
     imageProcess=ImageProcess(imagePath)
     imageProcess.handleGray()
     imageProcess.gray()
@@ -91,5 +87,3 @@ if __name__=="__main__":
     imageProcess.cv2show()
     imageProcess.thresholdingPlt()
     imageProcess.pltshow()
-
-
