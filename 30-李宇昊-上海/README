@@ -1,0 +1,1 @@
+RGB2GRAY.py中包含了手工实现灰度化、调用库实现灰度化、二值化三个部分，用cv2.imshow和cvwaitKey(0)来显示图片，可以用plt.show()来保存plt输出的图片，没能用cv2.imwrite成功保存图片
