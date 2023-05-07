@@ -1,0 +1,21 @@
+import cv2
+import numpy as np
+#实现最邻近插值
+def func(img):
+    h, w, c = img.shape
+    emptyImg = np.zeros((800, 800, c), np.uint8)
+    sh = 800/h
+    sw = 800/w
+    for i in range(800):
+        for j in range(800):
+            x = int(i/sh+0.5)
+            y = int(j/sw+0.5)
+            emptyImg[i,j] = img[x,y]
+    return emptyImg
+img = cv2.imread("lenna.png")
+zoom = func(img)
+print(zoom)
+print(zoom.shape)
+cv2.imshow("nearest", zoom)
+cv2.imshow("image", img)
+cv2.waitKey(0)
