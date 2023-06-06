@@ -1,0 +1,27 @@
+import numpy as np
+import cv2
+#实现双线性插值
+def func(img,out_dim):
+    sh,sw,c = img.shape
+    dh,dw = out_dim[0],out_dim[1]
+    if sh == dh and sw == dw:
+        return img.copy()
+    dst_img = np.zeros((dh,dw,3),dtype=np.uint8)
+    scale_x, scale_y = float(sh) / dw, float(sh) / dw
+    for i in range(3):
+        for dx in range(dh):
+            for dy in range(dw):
+                src_x = (dx + 0.5) * scale_x - 0.5
+                src_y = (dy + 0.5) * scale_x - 0.5
+                src_x0 = int(np.floor(src_x))
+                src_x1 = min(src_x0 + 1, sh - 1)
+                src_y0 = int(np.floor(src_y))
+                src_y1 = min(src_y0 + 1, sw - 1)
+                R1 = (src_x1 - src_x) * img[src_x0, src_y0, i] + (src_x - src_x0) * img[src_x1, src_y0, i]
+                R2 = (src_x1 - src_x) * img[src_x0, src_y1, i] + (src_x - src_x0) * img[src_x1, src_y1, i]
+                dst_img[dx, dy, i] = int((src_y1 - src_y) * R1 + (src_y - src_y0) * R2)
+    return dst_img
+img = cv2.imread("lenna.png")
+dst = func(img, (700, 700))
+cv2.imshow('bilinear',dst)
+cv2.waitKey()
