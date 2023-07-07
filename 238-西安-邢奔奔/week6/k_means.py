@@ -46,13 +46,18 @@ titles = ['原始图像','聚类图像']
 
 imgs = [img,dst]
 for i in range(2):
-    plt.subplot(2,2,i+1)
+    plt.subplot(2,3,i+1)
     plt.imshow(imgs[i],'gray')
     plt.title(titles[i])
     plt.xticks([])
     plt.yticks([])
     #隐藏坐标轴
-# img_con = np.zeros((512,512))
+img_con = np.zeros((512,512))
+for i in range(256,512):
+    for j in range(512):
+        img_con[i][j] = 125
+plt.subplot(2,3,3)
+plt.imshow(img_con,'gray')
 # img_con = img_con + 1
 # for i in range(512):
 #      for j in range(255):
